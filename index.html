@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+ <head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Planet Gadget - Toko Handphone Terlengkap</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+   body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8fafc;
+   }
+   /* Animations */
+   .fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation-fill-mode: forwards;
+    animation-name: fadeInUp;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+   }
+   @keyframes fadeInUp {
+    to {
+     opacity: 1;
+     transform: translateY(0);
+    }
+   }
+   .pulse-icon {
+    animation: pulse 2s infinite;
+   }
+   @keyframes pulse {
+    0%,
+    100% {
+     transform: scale(1);
+     color: #3b82f6;
+    }
+    50% {
+     transform: scale(1.2);
+     color: #2563eb;
+    }
+   }
+   .card-hover-effect:hover .product-img {
+    transform: scale(1.05);
+   }
+   .card-hover-effect:hover .buy-button {
+    opacity: 1;
+    transform: translateY(0);
+   }
+   .buy-button {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease-in-out;
+   }
+   html {
+    scroll-behavior: smooth;
+   }
+   .image-popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+   }
+   .image-popup-content {
+    max-width: 90%;
+    max-height: 90%;
+    transform: scale(0.8);
+    transition: transform 0.3s ease;
+   }
+   .image-popup.active .image-popup-content {
+    transform: scale(1);
+   }
+   .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+   }
+   .close-btn:hover {
+    color: #bbb;
+   }
+  </style>
+ </head>
+ <body class="min-h-screen flex flex-col">
+  <nav class="bg-blue-600 shadow-md sticky top-0 z-50">
+   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <a class="text-white text-2xl font-bold flex items-center space-x-2 hover:text-blue-300 transition" href="#home">
+     <i class="fas fa-mobile-alt pulse-icon"></i>
+     <span>Planet Gadget</span>
+    </a>
+    <ul class="hidden md:flex space-x-8 text-blue-200 font-semibold">
+     <li><a class="hover:text-blue-300 transition" href="#home">Beranda</a></li>
+     <li><a class="hover:text-blue-300 transition" href="#products">Produk</a></li>
+     <li><a class="hover:text-blue-300 transition" href="#gallery">Galeri</a></li>
+     <li><a class="hover:text-blue-300 transition" href="#location">Lokasi</a></li>
+     <li><a class="hover:text-blue-300 transition" href="#ewallet">E-Wallet</a></li>
+     <li><a class="hover:text-blue-300 transition" href="#about">Tentang</a></li>
+    </ul>
+    <button aria-label="Toggle menu" class="md:hidden text-blue-200 focus:outline-none" id="mobile-menu-button">
+     <i class="fas fa-bars fa-2x"></i>
+    </button>
+   </div>
+   <div class="hidden md:hidden bg-blue-500" id="mobile-menu">
+    <ul class="flex flex-col p-4 space-y-3 text-blue-900 font-semibold">
+     <li><a class="block hover:text-blue-700 transition" href="#home">Beranda</a></li>
+     <li><a class="block hover:text-blue-700 transition" href="#products">Produk</a></li>
+     <li><a class="block hover:text-blue-700 transition" href="#gallery">Galeri</a></li>
+     <li><a class="block hover:text-blue-700 transition" href="#location">Lokasi</a></li>
+     <li><a class="block hover:text-blue-700 transition" href="#ewallet">E-Wallet</a></li>
+     <li><a class="block hover:text-blue-700 transition" href="#about">Tentang</a></li>
+    </ul>
+   </div>
+  </nav>
+  
+  <section class="flex-grow flex flex-col justify-center items-center text-center px-6 py-20 bg-gradient-to-br from-blue-100 to-blue-300 relative overflow-hidden" id="home">
+   <h1 class="text-4xl md:text-6xl font-extrabold text-blue-900 mb-4 fade-in-up" style="animation-delay: 0.6s">
+    Temukan Gadget Impianmu di <span class="text-white drop-shadow-lg">Planet Gadget</span>
+   </h1>
+   <p class="max-w-2xl text-blue-800 text-lg md:text-xl fade-in-up" style="animation-delay: 0.9s">
+    Kami menawarkan koleksi handphone terbaru dengan harga terbaik dan pengalaman belanja yang tak tertandingi.
+   </p>
+   <a class="mt-8 inline-block bg-white hover:bg-gray-100 text-blue-600 font-semibold py-3 px-8 rounded-full shadow-xl transition transform hover:scale-105 fade-in-up" href="#products" style="animation-delay: 1.2s">
+    Jelajahi Produk Kami <i class="fas fa-arrow-right ml-2"></i>
+   </a>
+  </section>
+  
+  <section class="bg-blue-50 py-16 px-6 max-w-7xl mx-auto" id="products">
+   <h2 class="text-3xl md:text-4xl font-bold text-blue-900 text-center mb-12 fade-in-up" style="animation-delay: 0.2s">
+    Katalog Produk Kami
+   </h2>
+   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+    <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 fade-in-up card-hover-effect" style="animation-delay: 0.3s">
+     <div class="overflow-hidden">
+      <img alt="Smartphone flagship terbaru" class="w-full h-48 object-cover product-img transition-transform duration-300" height="300" src="j.jpg" width="400" />
+     </div>
+     <div class="p-6 text-center">
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">Samsung Galaxy Z Flip6</h3>
+      <p class="text-blue-600 font-bold text-lg mb-4">Rp 17.999.000</p>
+      <a class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition buy-button" href="#" rel="noopener">Beli Sekarang</a>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 fade-in-up card-hover-effect" style="animation-delay: 0.4s">
+     <div class="overflow-hidden">
+      <img alt="Handphone klasik Nokia" class="w-full h-48 object-cover product-img transition-transform duration-300" height="300" src="w.jpg" width="400" />
+     </div>
+     <div class="p-6 text-center">
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">Samsung j2 frime</h3>
+      <p class="text-blue-600 font-bold text-lg mb-4">Rp 599.000</p>
+      <a class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition buy-button" href="#" rel="noopener">Beli Sekarang</a>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 fade-in-up card-hover-effect" style="animation-delay: 0.5s">
+     <div class="overflow-hidden">
+      <img alt="Handphone iPhone 16 terbaru" class="w-full h-48 object-cover product-img transition-transform duration-300" height="300" src="p.jpg" width="400" />
+     </div>
+     <div class="p-6 text-center">
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">iPhone 16 Pro Max</h3>
+      <p class="text-blue-600 font-bold text-lg mb-4">Rp 25.500.000</p>
+      <a class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition buy-button" href="#" rel="noopener">Beli Sekarang</a>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 fade-in-up card-hover-effect" style="animation-delay: 0.6s">
+     <div class="overflow-hidden">
+      <img alt="Handphone gaming Asus ROG" class="w-full h-48 object-cover product-img transition-transform duration-300" height="300" src="https://storage.googleapis.com/a1aa/image/2a33ce1b-1393-46b8-075d-986bad33d6b1.jpg" width="400" />
+     </div>
+     <div class="p-6 text-center">
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">ASUS ROG Phone 8</h3>
+      <p class="text-blue-600 font-bold text-lg mb-4">Rp 12.999.000</p>
+      <a class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition buy-button" href="#" rel="noopener">Beli Sekarang</a>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 fade-in-up card-hover-effect" style="animation-delay: 0.7s">
+     <div class="overflow-hidden">
+      <img alt="Handphone budget Xiaomi" class="w-full h-48 object-cover product-img transition-transform duration-300" height="300" src="https://storage.googleapis.com/a1aa/image/15042c19-1e42-4612-e2ef-667fbad8bba5.jpg" width="400" />
+     </div>
+     <div class="p-6 text-center">
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">Xiaomi Redmi Note 13</h3>
+      <p class="text-blue-600 font-bold text-lg mb-4">Rp 2.999.000</p>
+      <a class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition buy-button" href="#" rel="noopener">Beli Sekarang</a>
+     </div>
+    </article>
+    <article class="bg-white rounded-xl shadow-lg overflow-hidden transform transition duration-300 fade-in-up card-hover-effect" style="animation-delay: 0.8s">
+     <div class="overflow-hidden">
+      <img alt="Handphone lipat Samsung" class="w-full h-48 object-cover product-img transition-transform duration-300" height="300" src="https://storage.googleapis.com/a1aa/image/217a8ff6-b1f2-49cf-7a7d-1f03945355d8.jpg" width="400" />
+     </div>
+     <div class="p-6 text-center">
+      <h3 class="text-xl font-semibold text-blue-800 mb-2">Samsung Galaxy Fold6</h3>
+      <p class="text-blue-600 font-bold text-lg mb-4">Rp 29.999.000</p>
+      <a class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-lg transition buy-button" href="#" rel="noopener">Beli Sekarang</a>
+     </div>
+    </article>
+   </div>
+  </section>
+  
+  <section class="bg-blue-100 py-16 px-6 max-w-7xl mx-auto" id="gallery">
+   <h2 class="text-3xl md:text-4xl font-bold text-blue-900 text-center mb-12 fade-in-up" style="animation-delay: 0.2s">
+    Galeri Produk Unggulan
+   </h2>
+   <p class="max-w-3xl mx-auto text-blue-800 text-center mb-12 fade-in-up" style="animation-delay: 0.4s">
+    Jelajahi keindahan dan detail produk kami dalam galeri eksklusif ini.
+   </p>
+   <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+    <img alt="Gambar Produk 1" class="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transform hover:scale-105 transition duration-300 gallery-image" src="j.jpg" />
+    <img alt="Gambar Produk 2" class="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transform hover:scale-105 transition duration-300 gallery-image" src="n.jpg" />
+    <img alt="Gambar Produk 3" class="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transform hover:scale-105 transition duration-300 gallery-image" src="y.jpg" />
+    <img alt="Gambar Produk 4" class="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transform hover:scale-105 transition duration-300 gallery-image" src="https://storage.googleapis.com/a1aa/image/2a33ce1b-1393-46b8-075d-986bad33d6b1.jpg" />
+    <img alt="Gambar Produk 5" class="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transform hover:scale-105 transition duration-300 gallery-image" src="p.jpg" />
+    <img alt="Gambar Produk 6" class="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transform hover:scale-105 transition duration-300 gallery-image" src="https://storage.googleapis.com/a1aa/image/217a8ff6-b1f2-49cf-7a7d-1f03945355d8.jpg" />
+    <img alt="Gambar Produk 7" class="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transform hover:scale-105 transition duration-300 gallery-image" src="https://storage.googleapis.com/a1aa/image/68210246-32b8-4bbe-cd30-010719db398a.jpg" />
+    <img alt="Gambar Produk 8" class="w-full h-40 object-cover rounded-lg shadow-md cursor-pointer transform hover:scale-105 transition duration-300 gallery-image" src="https://storage.googleapis.com/a1aa/image/a1c6d3c5-9fae-4ff4-4253-9a092986cef1.jpg" />
+   </div>
+  </section>
+  
+  <div class="image-popup" id="image-popup">
+   <span class="close-btn" id="close-popup">&times;</span>
+   <img class="image-popup-content" id="popup-image" src="" />
+  </div>
+  
+  <section class="bg-blue-50 py-16 px-6 max-w-7xl mx-auto" id="location">
+   <h2 class="text-3xl md:text-4xl font-bold text-blue-900 text-center mb-12 fade-in-up" style="animation-delay: 0.2s">
+    Lokasi Toko Fisik Kami
+   </h2>
+   <p class="max-w-3xl mx-auto text-blue-800 text-center mb-8 fade-in-up" style="animation-delay: 0.4s">
+    Kunjungi konter kami di lokasi strategis berikut untuk melihat produk secara langsung.
+   </p>
+   <div class="w-full h-96 rounded-lg overflow-hidden shadow-lg fade-in-up" style="animation-delay: 0.6s">
+    <iframe allowfullscreen="" class="w-full h-full border-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d8536.549891892175!2d106.88569181763499!3d-6.2331366646116475!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f31e94fa7d63%3A0x3f035f87ab44c225!2sPlanet%20Gadget%20Jakarta%20Timur!5e1!3m2!1sid!2sid!4v1757302494725!5m2!1sid!2sid" width="600" height="450" title="Peta lokasi Planet Gadget di Jakarta, Indonesia"></iframe>
+   </div>
+  </section>
+  
+  <section class="bg-blue-100 py-16 px-6 max-w-7xl mx-auto" id="ewallet">
+   <h2 class="text-3xl md:text-4xl font-bold text-blue-900 text-center mb-12 fade-in-up" style="animation-delay: 0.2s">
+    Metode Pembayaran E-Wallet
+   </h2>
+   <p class="max-w-3xl mx-auto text-blue-800 text-center mb-12 fade-in-up" style="animation-delay: 0.4s">
+    Kami menerima berbagai metode pembayaran e-wallet untuk kemudahan transaksi Anda.
+   </p>
+   <div class="flex flex-wrap justify-center gap-12 fade-in-up" style="animation-delay: 0.6s">
+    <div class="flex flex-col items-center space-y-3 bg-white rounded-xl shadow-lg p-6 w-40 hover:scale-105 transform transition duration-300 cursor-pointer">
+     <img alt="Logo GoPay" class="w-20 h-20 object-contain" height="80" src="https://storage.googleapis.com/a1aa/image/04ca26ca-4cec-40bf-19c3-c020ffbe6e01.jpg" width="80" />
+     <span class="text-blue-800 font-semibold text-lg">GoPay</span>
+    </div>
+    <div class="flex flex-col items-center space-y-3 bg-white rounded-xl shadow-lg p-6 w-40 hover:scale-105 transform transition duration-300 cursor-pointer">
+     <img alt="Logo OVO" class="w-20 h-20 object-contain" height="80" src="https://storage.googleapis.com/a1aa/image/69783af2-c6f6-45ed-7163-e5fd2225584c.jpg" width="80" />
+     <span class="text-blue-800 font-semibold text-lg">OVO</span>
+    </div>
+    <div class="flex flex-col items-center space-y-3 bg-white rounded-xl shadow-lg p-6 w-40 hover:scale-105 transform transition duration-300 cursor-pointer">
+     <img alt="Logo Dana" class="w-20 h-20 object-contain" height="80" src="https://storage.googleapis.com/a1aa/image/e1af7244-12ff-4027-9b0b-17183acf5d63.jpg" width="80" />
+     <span class="text-blue-800 font-semibold text-lg">Dana</span>
+    </div>
+    <div class="flex flex-col items-center space-y-3 bg-white rounded-xl shadow-lg p-6 w-40 hover:scale-105 transform transition duration-300 cursor-pointer">
+     <img alt="Logo LinkAja" class="w-20 h-20 object-contain" height="80" src="https://storage.googleapis.com/a1aa/image/55f4ce7e-aaaf-453e-a53d-890706378123.jpg" width="80" />
+     <span class="text-blue-800 font-semibold text-lg">LinkAja</span>
+    </div>
+   </div>
+  </section>
+  
+  <section class="bg-blue-50 py-16 px-6 max-w-4xl mx-auto text-center fade-in-up" id="about" style="animation-delay: 0.3s">
+   <h2 class="text-3xl font-bold text-blue-900 mb-6">Tentang Planet Gadget</h2>
+   <p class="text-blue-800 text-lg leading-relaxed">
+    Planet Gadget adalah destinasi terbaik untuk menemukan handphone dan aksesoris terbaru. Kami berkomitmen memberikan produk berkualitas, harga kompetitif, dan layanan pelanggan terbaik untuk pengalaman belanja yang memuaskan.
+   </p>
+  </section>
+  
+  <footer class="bg-blue-600 text-blue-200 py-6 mt-auto">
+   <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+    <p class="text-sm">© 2024 Planet Gadget. Semua hak cipta dilindungi.</p>
+    <div class="flex space-x-6 text-blue-200">
+     <a aria-label="Facebook" class="hover:text-blue-300 transition" href="https://www.facebook.com" rel="noopener" target="_blank"><i class="fab fa-facebook fa-lg"></i></a>
+     <a aria-label="Twitter" class="hover:text-blue-300 transition" href="https://www.twitter.com" rel="noopener" target="_blank"><i class="fab fa-twitter fa-lg"></i></a>
+     <a aria-label="Instagram" class="hover:text-blue-300 transition" href="https://www.instagram.com" rel="noopener" target="_blank"><i class="fab fa-instagram fa-lg"></i></a>
+    </div>
+   </div>
+  </footer>
+  
+  <script>
+   // Mobile menu toggle
+   const btn = document.getElementById('mobile-menu-button');
+   const menu = document.getElementById('mobile-menu');
+   
+   btn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+   });
+   
+   // Close mobile menu when a link is clicked
+   const mobileLinks = document.querySelectorAll('#mobile-menu a');
+   mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+     menu.classList.add('hidden');
+    });
+   });
+   
+   // Animate fade-in-up on scroll
+   const faders = document.querySelectorAll('.fade-in-up');
+   
+   const appearOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px',
+   };
+   
+   const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+    entries.forEach(entry => {
+     if (!entry.isIntersecting) {
+      return;
+     } else {
+      entry.target.style.animationPlayState = 'running';
+      appearOnScroll.unobserve(entry.target);
+     }
+    });
+   }, appearOptions);
+   
+   faders.forEach(fader => {
+    fader.style.animationPlayState = 'paused';
+    appearOnScroll.observe(fader);
+   });
+   
+   // Gallery Lightbox
+   const galleryImages = document.querySelectorAll('.gallery-image');
+   const popup = document.getElementById('image-popup');
+   const popupImage = document.getElementById('popup-image');
+   const closeBtn = document.getElementById('close-popup');
+   
+   galleryImages.forEach(image => {
+    image.addEventListener('click', () => {
+     popup.style.display = 'flex';
+     popup.classList.add('active');
+     popupImage.src = image.src;
+    });
+   });
+   
+   closeBtn.addEventListener('click', () => {
+    popup.classList.remove('active');
+    setTimeout(() => {
+     popup.style.display = 'none';
+    }, 300);
+   });
+   
+   popup.addEventListener('click', (e) => {
+    if (e.target === popup) {
+     popup.classList.remove('active');
+     setTimeout(() => {
+      popup.style.display = 'none';
+     }, 300);
+    }
+   });
+  </script>
+ </body>
+</html>
